@@ -9,7 +9,11 @@ environment.
 
 ### Quick use
 
-Use `nix shell` to quickly create a shell with all the
+**NOTICE**: on first use, nix will download and build cairo and scarb. This can
+take a while, but it's a one time only operation. In the future, we will publish
+a binary cache to speed up first use.
+
+Use `nix shell` to easily create a shell with all the
 development tools needed.
 
 By default, it creates a shell with scarb installed.
