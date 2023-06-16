@@ -8,15 +8,35 @@ environment.
 ### Quick use
 
 Use `nix shell` to quickly create a shell with all the
-development tools needed for Cairo.
+development tools needed.
+
+By default, it creates a shell with scarb installed.
+
+```
+$ nix shell github:cairo-nix/cairo-nix
+$ scarb --version
+scarb 0.4.0
+cairo: 1.1.0 (43b83560d)
+```
+
+You can optionally decide to create a shell with the cairo tools installed.
 
 ```
 $ nix shell github:cairo-nix/cairo-nix
 $ cairo-compile --version
 cairo-lang-compiler 1.1.0
-$ scarb --version
-scarb 0.4.0
-cairo: 1.1.0 (43b83560d)
+```
+
+If you need both sets of components installed, you can add the overlay to your
+project's `flake.nix` and customize the installed packages.
+
+### From template
+
+You can use `nix flake new` to create a new project that's already configured
+to use this overlay.
+
+```
+nix flake new --template github:cairo-nix/cairo-nix
 ```
 
 ## Roadmap

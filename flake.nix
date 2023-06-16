@@ -14,6 +14,13 @@
       overlays = {
         default = overlay;
       };
+
+      templates = {
+        default = {
+          path = ./templates/simple;
+          description = "A basic project using cairo-nix";
+        };
+      };
     } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -29,6 +36,12 @@
             cairo-bin.stable.latest.cairo
             cairo-bin.stable.latest.scarb
           ];
+        };
+
+        packages = {
+          default = pkgs.cairo-bin.stable.latest.scarb;
+          cairo = pkgs.cairo-bin.stable.latest.cairo;
+          scarb = pkgs.cairo-bin.stable.latest.scarb;
         };
       });
 }
