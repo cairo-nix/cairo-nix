@@ -25,8 +25,9 @@
         formatter = pkgs.nixpkgs-fmt;
 
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = [
-            pkgs.cairo-bin.stable.latest
+          nativeBuildInputs = with pkgs; [
+            cairo-bin.stable.latest.cairo
+            cairo-bin.stable.latest.scarb
           ];
         };
       });
