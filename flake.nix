@@ -14,5 +14,20 @@
       overlays = {
         default = overlay;
       };
-    };
+    } // flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ overlay ];
+        };
+      in
+      {
+        formatter = pkgs.nixpkgs-fmt;
+
+        devShells.default = pkgs.mkShell {
+          nativeBuildInputs = [
+            pkgs.cairo-bin.stable.latest
+          ];
+        };
+      });
 }
