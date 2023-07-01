@@ -33,15 +33,15 @@
 
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [
-            cairo-bin.stable.latest.cairo
-            cairo-bin.stable.latest.scarb
+            cairo-bin.stable.cairo
+            cairo-bin.stable.scarb
           ];
         };
 
         packages = {
-          default = pkgs.cairo-bin.stable.latest.scarb;
-          cairo = pkgs.cairo-bin.stable.latest.cairo;
-          scarb = pkgs.cairo-bin.stable.latest.scarb;
+          default = pkgs.cairo-bin.stable.scarb;
+          cairo = pkgs.cairo-bin.beta.cairo;
+          scarb = pkgs.cairo-bin.stable.scarb;
         };
       });
 }

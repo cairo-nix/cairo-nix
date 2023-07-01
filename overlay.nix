@@ -43,16 +43,14 @@ let
         doCheck = false;
 
         src = final.fetchFromGitHub {
-          owner = scarb.repo;
+          owner = "software-mansion";
           repo = pname;
           rev = "v${scarb.version}";
           hash = scarb.srcHash;
         };
 
-        cargoLock = {
-          lockFile = ./Cargo.lock;
-          outputHashes = scarb.cargoOutputHashes;
-        };
+        cargoHash = scarb.cargoHash;
+        cargoLock = scarb.cargoLock;
 
         CAIRO_ARCHIVE = fetchCairo {
           rev = cairo.version;
@@ -67,22 +65,49 @@ let
         };
       };
     };
+
+  versions = [
+    {
+      cairo = {
+        version = "1.1.0";
+        srcHash = "sha256-8dzDe4Kw9OASD0i3bMooqEclStxS/Ta/tOVCcFhvwSI=";
+        archiveHash = "sha256-u3ONdg/B8PS82alK9l7aurVlwK0v8bXy95dbY9s2TT0=";
+        cargoHash = "sha256-IY3RE+EeNRhUSZX+bqojhPl6y8qm+i9C0zQmNApmat8=";
+      };
+      scarb = {
+        version = "0.4.1";
+        srcHash = "sha256-1PL0qesYvAe2CFAC75ABNOwIRlLT6rDgt3UBdWdB0X0=";
+        cargoHash = null;
+        cargoLock = {
+          lockFile = ./lockfiles/v0.4.1/Cargo.lock;
+          outputHashes = {
+            "cairo-lang-casm-1.1.1" = "sha256-dC6BkwSMoIgh5+G/mNlnJIBrjenfCoLIQKJg6CSmtcE=";
+          };
+        };
+      };
+    }
+    {
+      cairo = {
+        version = "2.0.0-rc5";
+        srcHash = "sha256-8dzDe4Kw9OASD0i3bMooqEclStxS/Ta/tOVCcFhvwSI=";
+        archiveHash = "sha256-0hvdNlJL6CO7QgL7qypcL1eved0xbRUWvEGydt7RY58=";
+        cargoHash = "sha256-2Ga3hJY7o71jHnC/04l42l3htRH6Jh5p+C7EQeQcdtc=";
+      };
+      scarb = {
+        version = "0.5.0-alpha.3";
+        srcHash = "sha256-PLGcioehKFED2NguCKVWDHGWUjp6bxcd0bChn79UdZM=";
+        cargoHash = "sha256-cnYlaQG8LbVRgUC4OcW+RfpB4CcixVq9TVDxD6gWlcY=";
+        cargoLock = null;
+      };
+    }
+  ];
+
+  toolchains =
+    builtins.listToAttrs (builtins.map (v: { name = v.cairo.version; value = mkCairo v; }) versions);
 in
 {
-  cairo-bin.stable.latest = mkCairo {
-    cairo = {
-      version = "1.1.0";
-      srcHash = "sha256-8dzDe4Kw9OASD0i3bMooqEclStxS/Ta/tOVCcFhvwSI=";
-      archiveHash = "sha256-u3ONdg/B8PS82alK9l7aurVlwK0v8bXy95dbY9s2TT0=";
-      cargoHash = "sha256-IY3RE+EeNRhUSZX+bqojhPl6y8qm+i9C0zQmNApmat8=";
-    };
-    scarb = {
-      version = "0.4.0-patch";
-      repo = "fracek";
-      srcHash = "sha256-kpuBexEWZ1Jg+YIgbZ1bEQSd9ZXKsKK9U7sG4hYAXUI=";
-      cargoOutputHashes = {
-        "cairo-lang-casm-1.1.0" = "sha256-Mp+P+SNZW1hlKgqo+zCopVa5PaTQX/3giDz9ynsj6L0=";
-      };
-    };
-  };
+  cairo-bin = (toolchains // {
+    stable = toolchains."1.1.0";
+    beta = toolchains."2.0.0-rc5";
+  });
 }
