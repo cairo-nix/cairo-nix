@@ -31,7 +31,7 @@
           # beta scarb releases.
           beta = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
-              cairo-bin.stable.scarb
+              cairo-bin.beta.scarb
             ];
           };
         };
