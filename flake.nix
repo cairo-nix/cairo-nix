@@ -41,7 +41,7 @@
         packages = {
           default = pkgs.cairo-bin.stable.scarb;
           cairo = pkgs.cairo-bin.beta.cairo;
-          scarb = pkgs.cairo-bin.stable.scarb;
+          scarb = pkgs.cairo-bin.beta.scarb;
         };
       });
 }
