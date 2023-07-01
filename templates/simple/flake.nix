@@ -19,11 +19,21 @@
         };
       in
       {
-        devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [
-            cairo-bin.stable.latest.cairo
-            cairo-bin.stable.latest.scarb
-          ];
+        devShells = rec {
+          default = stable;
+          stable = pkgs.mkShell {
+            nativeBuildInputs = with pkgs; [
+              cairo-bin.stable.cairo
+              cairo-bin.stable.scarb
+            ];
+          };
+
+          beta = pkgs.mkShell {
+            nativeBuildInputs = with pkgs; [
+              cairo-bin.stable.cairo
+              cairo-bin.stable.scarb
+            ];
+          };
         };
       });
 }
