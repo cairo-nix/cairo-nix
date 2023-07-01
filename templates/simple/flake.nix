@@ -21,18 +21,16 @@
           # default shell if no shell specified.
           default = stable;
 
-          # stable cairo and scarb releases.
+          # stable scarb releases.
           stable = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
-              cairo-bin.stable.cairo
               cairo-bin.stable.scarb
             ];
           };
 
-          # beta cairo and scarb releases.
+          # beta scarb releases.
           beta = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
-              cairo-bin.stable.cairo
               cairo-bin.stable.scarb
             ];
           };
