@@ -5,6 +5,8 @@ environment.
 
 ## Usage
 
+![cairo-nix in use](https://github.com/cairo-nix/cairo-nix/assets/282580/ba3b48d8-23c7-46b6-b926-977d6adb274a)
+
 ### Quick use
 
 Use `nix shell` to quickly create a shell with all the
