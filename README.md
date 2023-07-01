@@ -12,31 +12,38 @@ development tools needed.
 
 By default, it creates a shell with scarb installed.
 
+```sh
+nix shell github:cairo-nix/cairo-nix
+scarb --version
 ```
-$ nix shell github:cairo-nix/cairo-nix
-$ scarb --version
+```txt
 scarb 0.4.0
 cairo: 1.1.0 (43b83560d)
 ```
-
-You can optionally decide to create a shell with the cairo tools installed.
-
-```
-$ nix shell github:cairo-nix/cairo-nix
-$ cairo-compile --version
-cairo-lang-compiler 1.1.0
-```
-
-If you need both sets of components installed, you can add the overlay to your
-project's `flake.nix` and customize the installed packages.
 
 ### From template
 
 You can use `nix flake new` to create a new project that's already configured
 to use this overlay.
 
-```
+```sh
 nix flake new --template github:cairo-nix/cairo-nix
+```
+
+The template includes two development shells, one with the stable Cairo release
+(default), one with the beta release. You can easily switch between these two
+environments using `nix develop`.
+
+```sh
+# use default (stable) Cairo
+nix develop
+# alternatively
+nix develop .#stable
+```
+
+```sh
+# use next Cairo version
+nix develop .#beta
 ```
 
 ## Roadmap
@@ -47,9 +54,9 @@ As long as you don't run `nix flake update` to update
 to a more recent version, you'll be fine.
 
  - [x] Build stable Cairo binaries.
- - [ ] Build beta/nightly binaries.
+ - [x] Build beta/nightly binaries.
  - [x] Add `scarb` component.
  - [ ] Add `vscode-extension` component.
  - [ ] Add binary cache for faster build times.
- - [ ] Add template project.
+ - [x] Add template project.
 
