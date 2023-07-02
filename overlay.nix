@@ -1,6 +1,9 @@
 final: prev:
 let
-  fetchCairo = { rev, hash }: final.fetchurl {
+  inherit (final)
+    lib stdenv darwin fetchurl fetchFromGitHub rustPlatform;
+
+  fetchCairo = { rev, hash }: fetchurl {
     name = "cairo-archive-${rev}";
     url = "https://github.com/starkware-libs/cairo/archive/v${rev}.zip";
     sha256 = hash;
@@ -13,13 +16,13 @@ let
     let
     in
     {
-      cairo = final.rustPlatform.buildRustPackage rec {
+      cairo = rustPlatform.buildRustPackage rec {
         pname = "cairo";
         version = cairo.version;
 
         doCheck = false;
 
-        src = final.fetchFromGitHub {
+        src = fetchFromGitHub {
           owner = "starkware-libs";
           repo = pname;
           rev = "v${cairo.version}";
@@ -28,7 +31,7 @@ let
 
         cargoHash = cairo.cargoHash;
 
-        meta = with final.lib; {
+        meta = with lib; {
           description = " Cairo is the first Turing-complete language for creating provable programs for general computation.";
           homepage = "https://github.com/starkware-libs/cairo";
           license = licenses.asl20;
@@ -36,13 +39,17 @@ let
         };
       };
 
-      scarb = final.rustPlatform.buildRustPackage rec {
+      scarb = rustPlatform.buildRustPackage rec {
         pname = "scarb";
         version = scarb.version;
 
         doCheck = false;
 
-        src = final.fetchFromGitHub {
+        buildInputs = lib.optional stdenv.isDarwin [
+          darwin.apple_sdk.frameworks.CoreFoundation
+        ];
+
+        src = fetchFromGitHub {
           owner = "software-mansion";
           repo = pname;
           rev = "v${scarb.version}";
@@ -57,7 +64,7 @@ let
           hash = cairo.archiveHash;
         };
 
-        meta = with final.lib; {
+        meta = with lib; {
           description = "The Cairo package manager";
           homepage = "http://docs.swmansion.com/scarb/";
           license = licenses.asl20;
