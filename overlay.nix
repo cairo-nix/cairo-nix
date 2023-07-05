@@ -135,6 +135,20 @@ let
         cargoLock = null;
       };
     }
+    {
+      cairo = {
+        version = "2.0.1";
+        srcHash = "sha256-bqLkCP1hzdOMrVyyyiOZYN0BKPe8OjKMfpFGCr1/anU=";
+        archiveHash = "sha256-FqbEbetkoQi3PzedXSqmDCnNO1z2k17ADR/g3Gq+GDg=";
+        cargoHash = "sha256-FzQkAlNKFFLK8XmLafm37MvLekGE24BoLliaDpc+44w=";
+      };
+      scarb = {
+        version = "0.5.1";
+        srcHash = "sha256-iKASKhvxkev0W3cabHv3xz4wNC7YdWY3Odd0yYxOQic=";
+        cargoHash = "sha256-/21XKfDLsAH1+R4YqktgXFQOYA29YtxiaikdksmaTgA=";
+        cargoLock = null;
+      };
+    }
   ];
 
   toolchains =
@@ -143,6 +157,6 @@ in
 {
   cairo-bin = (toolchains // {
     stable = toolchains."1.1.0";
-    beta = toolchains."2.0.0";
+    beta = toolchains."2.0.1";
   });
 }
