@@ -19,8 +19,8 @@ nix shell github:cairo-nix/cairo-nix
 scarb --version
 ```
 ```txt
-scarb 0.4.0
-cairo: 1.1.0 (43b83560d)
+scarb 0.5.2
+cairo: 2.0.2 (https://crates.io/crates/cairo-lang-compiler/2.0.2)
 ```
 
 ### From template
