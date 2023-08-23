@@ -33,6 +33,7 @@
 
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [
+            cargo
             cairo-bin.stable.cairo
             cairo-bin.stable.scarb
           ];
