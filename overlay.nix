@@ -12,9 +12,7 @@ let
     };
   };
 
-  mkCairo = { cairo, scarb }:
-    let
-    in
+  mkCairo = { toolchainVersion, cairo, scarb }:
     {
       cairo = rustPlatform.buildRustPackage rec {
         pname = "cairo";
@@ -32,7 +30,7 @@ let
         cargoHash = cairo.cargoHash;
 
         meta = with lib; {
-          description = " Cairo is the first Turing-complete language for creating provable programs for general computation.";
+          description = "Cairo is the first Turing-complete language for creating provable programs for general computation.";
           homepage = "https://github.com/starkware-libs/cairo";
           license = licenses.asl20;
           maintainers = [ ];
@@ -345,14 +343,29 @@ let
         cargoLock = null;
       };
     }
+    {
+      toolchainVersion = "2.6.3-1";
+      cairo = {
+        version = "2.6.3";
+        srcHash = "sha256-rgAeSrbUM8BFBr19wEhLxRDH72uuyaKXTgKFiK/Z8VA=";
+        archiveHash = "sha256-xeo978HmW0legOHcxOa11aqqh6/woUXxIYzhnvSAxWU=";
+        cargoHash = "sha256-hOAQy/g1Tcq4dC6DiAMueuak0FMDIgtaqqSarTlmJkE=";
+      };
+      scarb = {
+        version = "2.6.4";
+        srcHash = "sha256-2p1W5f6URiHLQ9QBPgspA5JCcaEEwkD+lLqLs9KY50o=";
+        cargoHash = "sha256-vcb6Fk1QloaeAHoTzeq4QbyQtEwD5IwwMP/LVYxSeTM=";
+        cargoLock = null;
+      };
+    }
   ];
 
   toolchains =
-    builtins.listToAttrs (builtins.map (v: { name = v.cairo.version; value = mkCairo v; }) versions);
+    builtins.listToAttrs (builtins.map (v: { name = if v ? toolchainVersion then v.toolchainVersion else v.cairo.version; value = mkCairo v; }) versions);
 in
 {
   cairo-bin = (toolchains // {
-    stable = toolchains."2.6.3";
-    beta = toolchains."2.6.3";
+    stable = toolchains."2.6.3-1";
+    beta = toolchains."2.6.3-1";
   });
 }
